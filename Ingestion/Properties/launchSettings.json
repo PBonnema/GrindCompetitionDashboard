@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Ingestion": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ENVIRONMENT": "Development",
+        "DATABASE_CONNECTION_STRING": "mongodb+srv://root@cluster0.3f7xn.mongodb.net/?retryWrites=true&w=majority",
+        "DATABASE_NAME": "BlockTanksStats",
+        "SELENIUM_CONNECTION_STRING": "http://localhost:4444/wd/hub",
+        "CLANS": "RIOT,RIOT2,RIOT3",
+        "APPLICATION_INSIGHTS_INSTRUMENTATION_KEY": "e6fa7b86-d862-4f0e-a0a8-db598dc96aef",
+        "DATABASE_PASSWORD": "kAWVOqPWbrUXDcqhOAW9"
+      }
+    }
+  }
+}

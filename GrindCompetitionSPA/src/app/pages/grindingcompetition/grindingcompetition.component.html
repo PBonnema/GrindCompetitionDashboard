@@ -1,0 +1,63 @@
+<header>
+    <img class="riotBanner" src="assets/RIOT_banner.gif">
+</header>
+
+<main>
+    <div class="explanation">
+        <h1>RIOT Grind Competition</h1>
+        <p>
+            Welcome to the grind competition scoreboard of RIOT.<br>
+            Whoever can grind the most XP between <b>{{config?.competitionStart | date:'long':'GMT'}}</b> and <b>{{config?.competitionEnd | date:'long':'GMT'}}</b> will be the winner. He or she will earn VIP in BlockTanks! <br><br>
+            This dashboard shows how much all RIOT members have grinded since the start of the competition.<br>
+            All members of all RIOT clans are included. It will update every <b>{{(config?.ingestionIntervalHours || 0) * 60}}</b> minutes but you have to refresh the page to see the updates.<br>
+            <br>
+        </p>
+        <div class="timeLeftHeader">Time left</div>
+        <div class="timeLeftTimer">{{timeLeftOfEvent}}</div>
+        <div class="links">
+            <a class="link" href="https://blocktanks.io/clan/RIOT" target="_blank">
+                <div class="linkImage btLogoContainer">
+                    <img class="riotLogo" src="/assets/RIOT_logo.png"><br>
+                </div>
+                <button mat-button class="myButton" mat-stroked-button target="_blank">To RIOT!</button>
+            </a>
+            <a class="link" href="https://blocktanks.io/" target="_blank">
+                <div class="linkImage btLogoContainer">
+                    <img class="btLogo" src="/assets/Icon_Blue.png"><br>
+                </div>
+                <button mat-button class="myButton" mat-stroked-button target="_blank">To BlockTanks!</button>
+            </a>
+        </div>
+    </div>
+    <div class="XPTableContainer">
+        <table mat-table [dataSource]="players" class="XPTable">
+            <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let player">
+                    <!-- <div id="tankPreview">
+                        <img src="https://blocktanks.io/assets/Tank%20Body.png" style="position:absolute;width:50%;left:25%;top:25%;height:50%;">
+                        <img src="https://blocktanks.io/assets/items/decal/200128.png" style="position:absolute;width:50%;left:25%;top:25%;height:50%;">
+                        <img src="https://blocktanks.io/assets/items/arm/200131.png" style="position:absolute;width:87.5%;left:6.25%;top:6.25%;height:87.5%;transform:rotate(30deg);">
+                        <img src="https://blocktanks.io/assets/items/sticker/0.png" style="position:absolute;width:50%;left:25%;top:25%;height:50%;">
+                    </div> -->
+                    {{player.place}}. {{player.name}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="XP Grinded">
+                <th mat-header-cell *matHeaderCellDef> XP Grinded </th>
+                <td mat-cell *matCellDef="let player"> {{player.currentScore.xp - player.initialScore.xp}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Stats">
+                <th mat-header-cell *matHeaderCellDef> Stats </th>
+                <td mat-cell *matCellDef="let player">
+                    <a class="myButton" mat-stroked-button [href]="player.statsLink" target="_blank">Stats</a>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let player; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</main>

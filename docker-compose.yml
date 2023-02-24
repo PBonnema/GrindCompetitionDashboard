@@ -1,0 +1,69 @@
+services: 
+    selenium-chrome:
+        image: selenium/standalone-chrome-debug
+        volumes:
+            - /dev/shm:/dev/shm # This is recommended by the readme of the image. https://github.com/SeleniumHQ/docker-selenium
+        environment:
+            START_XVFB: 'false' # If this is true, it starts a server in the container that is only necessary when you don't run chrome in headless mode
+            VNC_NO_PASSWORD: 1
+        restart: always
+        ports:
+            - 4444:4444
+        networks:
+            - nat
+
+    ingestion:
+        depends_on:
+            - selenium-chrome
+        image: crtestgrindingcompetition.azurecr.io/ingestion
+        build:
+            context: ./
+            dockerfile: Ingestion/Dockerfile
+            args:
+                IngestionDir: Ingestion
+                DataAccessDir: DataAccess
+        environment:
+            ENVIRONMENT: Test
+            INGESTION_INTERVAL_HOURS: 1.0
+            DATABASE_CONNECTION_STRING: mongodb+srv://root@cluster0.3f7xn.mongodb.net/?retryWrites=true&w=majority
+            SELENIUM_CONNECTION_STRING: http://selenium-chrome:4444/wd/hub
+            CLANS: RIOT,RIOT2,RIOT3
+            COMPETITION_START: 05-07-2021 17:44:10Z
+            DATABASE_NAME: BlockTanksStats
+            DATABASE_PASSWORD: kAWVOqPWbrUXDcqhOAW9
+        restart: always
+        networks:
+            - nat
+
+    api:
+        image: crtestgrindingcompetition.azurecr.io/api
+        build:
+            context: ./
+            dockerfile: GrindCompetitionAPI/Dockerfile
+            args:
+                GrindCompetitionAPIDir: GrindCompetitionAPI
+                DataAccessDir: DataAccess
+        environment:
+            ASPNETCORE_ENVIRONMENT: Test
+            BlockTanksStatsDatabaseSettings:DatabasePassword: kAWVOqPWbrUXDcqhOAW9
+        restart: always
+        ports:
+            - 9080:80
+
+    spa:
+        image: crtestgrindingcompetition.azurecr.io/spa
+        build:
+            context: ./
+            dockerfile: GrindCompetitionSPA/Dockerfile
+            args:
+                GrindCompetitionSPADir: GrindCompetitionSPA
+                DataAccessDir: DataAccess
+                Environment: test
+        restart: always
+        ports:
+            - 443:443
+            - 80:80
+
+networks:
+    nat:
+        name: nat

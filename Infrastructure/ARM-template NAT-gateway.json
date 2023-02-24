@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "natGateways_ng_test_grinding_competition_name": {
+            "defaultValue": "ng-test-grinding-competition",
+            "type": "String"
+        },
+        "publicIPAddresses_pip_test_ingestion_externalid": {
+            "defaultValue": "/subscriptions/db2b04b1-b865-4ccb-ac2f-243454dcdd78/resourceGroups/rg-test-grinding-competition/providers/Microsoft.Network/publicIPAddresses/pip-test-ingestion",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/natGateways",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('natGateways_ng_test_grinding_competition_name')]",
+            "location": "westeurope",
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            },
+            "properties": {
+                "idleTimeoutInMinutes": 4,
+                "publicIpAddresses": [
+                    {
+                        "id": "[parameters('publicIPAddresses_pip_test_ingestion_externalid')]"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,5 @@
+services: 
+    spa:
+        build:
+            args:
+                Environment: production

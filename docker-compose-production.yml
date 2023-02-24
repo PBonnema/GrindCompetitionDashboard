@@ -1,0 +1,14 @@
+services: 
+    selenium-chrome:
+        environment:
+            START_XVFB: 'false' # If this is true, it starts a server in the container that is only necessary when you don't run chrome in headless mode
+        ports:
+            - 4444:4444
+
+    ingestion:
+        environment:
+            ENVIRONMENT: Production
+
+    api:
+        environment:
+            ASPNETCORE_ENVIRONMENT: Production

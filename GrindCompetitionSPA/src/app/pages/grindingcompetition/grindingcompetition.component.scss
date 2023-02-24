@@ -1,0 +1,155 @@
+.myButton {
+    font-size: 1em;
+    border-color: rgb(208,39,50);
+    color: rgb(208,39,50);
+}
+
+:host {
+    display: flex;
+    flex-flow: column nowrap;
+
+    background:url('/assets/background.png');
+
+    header {
+        background-color: black;
+        display: flex;
+        justify-content: center;
+
+        .riotBanner {
+            width: 517px;
+            height: 291px;
+        }
+    }
+
+    main {
+        margin-top: 3em;
+        font-size: 1.2em;
+        line-height: 1.6em;
+        flex: 1;
+
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+
+        .explanation {
+            background-color: white;
+            border-radius: 1.5em;
+            border-color: rgb(153,11,11);
+            box-shadow: 0 0 15px rgb(153,11,11);
+            padding: 1.5em;
+
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+
+            .timeLeftHeader {
+                font-size: 0.8em;
+                color: lightgray;
+                margin: 3em;
+            }
+
+            .timeLeftTimer {
+                font-size: 5em;
+                color: rgb(230,0,50);
+                margin-bottom: 0.8em;
+                font-family: cursive;
+                letter-spacing: 0.1em;
+
+                animation: glow 1.5s ease-in-out infinite alternate;
+            }
+
+            @keyframes glow {
+                from {
+                    text-shadow:
+                        0 0 5px #fff,
+                        0 0 10px #fff,
+                        0 0 15px rgb(200,40,40),
+                        0 0 20px rgb(200,40,40),
+                        0 0 25px rgb(200,40,40);
+                }
+
+                to {
+                    text-shadow:
+                        0 0 10px #fff,
+                        0 0 15px #ff1e1e,
+                        0 0 20px #ff1e1e,
+                        0 0 25px #ff1e1e,
+                        0 0 30px #ff1e1e,
+                        0 0 35px #ff1e1e,
+                        0 0 40px #ff1e1e;
+                }
+            }
+
+            .links {
+                display: flex;
+                flex-flow: row nowrap;
+                width: 100%;
+                justify-content: space-around;
+                align-items: flex-end;
+
+                .link {
+                    display: flex;
+                    flex-flow: column nowrap;
+                    justify-content: flex-end;
+                    align-items: center;
+
+                    margin-top: 1.5em;
+
+                    .linkImage {
+                        margin-bottom: 0.5em;
+                    }
+
+                    .riotLogo {
+                        border-color: rgb(153,11,11);
+                        box-shadow: 0 0 20px rgb(153,11,11);
+                        width: 80px;
+                        height: 80px;
+                    }
+
+                    .btLogoContainer {
+                        width: 80px;
+                        height: 80px;
+                        border-color: #345CD2;
+                        box-shadow: 0 0 20px #345CD2;
+                    }
+
+                    .btLogo {
+                        margin-top: -16.335078534031413612565445026178px;
+                        width: 80px;
+                        height: 96.335078534031413612565445026178px;
+                    }
+                }
+            }
+        }
+
+        .XPTableContainer {
+            border-radius: 1.5em;
+            border-color: rgb(153,11,11);
+            box-shadow: 0 0 15px rgb(153,11,11);
+            margin: 3em;
+            width: 80%;
+            padding: 1.5em;
+            display: flex;
+            background-color: white;
+
+            .XPTable {
+                flex: 1 1 90%;
+                .mat-column-Name {
+                    font-size: 1.2em;
+                }
+
+                .mat-column-header-Name {
+                    font-size: 2em;
+                }
+
+                .mat-column-XP-Grinded {
+                    font-size: 1.2em;
+                }
+
+                .mat-column-Stats {
+                    font-size: 1.2em;
+                }
+            }
+        }
+    }
+}

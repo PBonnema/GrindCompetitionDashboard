@@ -1,0 +1,99 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerGroups_ci_test_ingestion_name": {
+      "defaultValue": "ci-test-ingestion",
+      "type": "String"
+    },
+    "networkProfiles_ci_test_ingestion_networkProfile_externalid": {
+      "defaultValue": "/subscriptions/db2b04b1-b865-4ccb-ac2f-243454dcdd78/resourceGroups/rg-test-grinding-competition/providers/Microsoft.Network/networkProfiles/ci-test-ingestion-networkProfile",
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "apiVersion": "2021-03-01",
+      "name": "[parameters('containerGroups_ci_test_ingestion_name')]",
+      "location": "westeurope",
+      "properties": {
+        "sku": "Standard",
+        "containers": [
+          {
+            "name": "[parameters('containerGroups_ci_test_ingestion_name')]",
+            "properties": {
+              "image": "crtestgrindingcompetition.azurecr.io/ingestion:latest",
+              "ports": [
+                {
+                  "protocol": "TCP",
+                  "port": 4444
+                }
+              ],
+              "environmentVariables": [
+                {
+                  "name": "ENVIRONMENT",
+                  "value": "Acceptance"
+                },
+                {
+                  "name": "DATABASE_CONNECTION_STRING",
+                  "value": "mongodb+srv://root@cluster0.3f7xn.mongodb.net/?retryWrites=true&w=majority"
+                },
+                {
+                  "name": "DATABASE_NAME",
+                  "value": "BlockTanksStats"
+                },
+                {
+                  "name": "SELENIUM_CONNECTION_STRING",
+                  "value": "http://10.0.0.4:4444/wd/hub"
+                },
+                {
+                  "name": "CLANS",
+                  "value": "RIOT,RIOT2,RIOT3"
+                },
+                {
+                  "name": "APPLICATION_INSIGHTS_INSTRUMENTATION_KEY",
+                  "value": "e6fa7b86-d862-4f0e-a0a8-db598dc96aef"
+                },
+                {
+                  "name": "DATABASE_PASSWORD",
+                  "secureValue": "kAWVOqPWbrUXDcqhOAW9"
+                }
+              ],
+              "resources": {
+                "requests": {
+                  "memoryInGB": 0.5,
+                  "cpu": 1
+                }
+              }
+            }
+          }
+        ],
+        "initContainers": [],
+        "imageRegistryCredentials": [
+          {
+            "server": "crtestgrindingcompetition.azurecr.io",
+            "username": "crtestgrindingcompetition",
+            "password": "m7QaPDzh2Pzlk+=OSE3leA=D49LfmtQg"
+          }
+        ],
+        "restartPolicy": "Always",
+        "ipAddress": {
+          "ports": [
+            {
+              "protocol": "TCP",
+              "port": 4444
+            }
+          ],
+          "ip": "10.0.0.5",
+          "type": "Private"
+        },
+        "osType": "Linux",
+        "networkProfile": {
+          "id": "[parameters('networkProfiles_ci_test_ingestion_networkProfile_externalid')]"
+        }
+      }
+    }
+  ]
+}
